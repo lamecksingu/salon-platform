@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
 const sequelize = require('./db');
 const models = require('./models'); // Import all models to register them with Sequelize
@@ -12,6 +13,9 @@ const authRoutes = require('./routes/auth'); // Authentication
 app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleware);
+
+// update morgan to log status codes
+app.use(morgan(':method :url :status :response-time ms '));
 
 // Routes
 const salonRoutes = require('./routes/salonRoutes'); // Example route
