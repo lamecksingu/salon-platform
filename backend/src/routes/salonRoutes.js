@@ -7,4 +7,13 @@ const salonController = require('../controllers/salonController'); // Ensure thi
 // Define routes
 router.get('/', salonController.getAllSalons); // Ensure `salonController.getAllSalons` is defined
 
+// Create a salon
+router.post('/', salonController.createSalon);
+
+// Update a salon
+router.put('/:id', salonController.updateSalon);
+
+// Delete a salon
+router.delete('/:id', salonController.deleteSalon);
+
 module.exports = router;
