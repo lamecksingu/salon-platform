@@ -8,6 +8,7 @@ const loggerMiddleware = require('./middleware/logger');
 
 const app = express();
 const authRoutes = require('./routes/auth'); // Authentication
+const serviceRoutes = require('./routes/serviceRoutes');
 
 // Middleware
 app.use(cors());
@@ -21,6 +22,7 @@ app.use(morgan(':method :url :status :response-time ms '));
 const salonRoutes = require('./routes/salonRoutes'); // Example route
 app.use('/api/salons', salonRoutes);
 app.use('/api/auth', authRoutes); // Authentication route
+app.use('/api/services', serviceRoutes);
 
 const PORT = process.env.PORT || 5000;
 
