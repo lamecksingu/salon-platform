@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User, Stylist } = require('../models');
 
 const register = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, specialization, freelance, salon_id } = req.body;
 
     try {
 	    // check if the user exists
@@ -16,9 +16,22 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
 	    //create the user
-        const user = await User.create({ name, email, password: hashedPassword, role });
+        const user = await User.create({ name, email, password: hashedPassword, role, });
+
+	    // If the role is stylist, add a record to the stylists table
+        if (role === 'stylist') {
+            await Stylist.create({
+                user_id: user.id, // Use the ID of the newly created user
+                name: name, // Default to the user's name
+                specialization: specialization || null, // Optional specialization
+                freelance: freelance || false, // Default to non-freelance
+                salon_id: freelance ? null : salon_id || null, // Salon ID for non-freelancers
+            });
+        }
+
 	    // exclude password from the response
 	    const { password: _, ...userWithoutPassword } = user.toJSON();
+
         res.status(201).json({ message: 'User registered successfully', user: userWithoutPassword });
     } catch (error) {
         res.status(400).json({ error: error.message });
