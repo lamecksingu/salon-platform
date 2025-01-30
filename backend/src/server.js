@@ -9,6 +9,7 @@ const loggerMiddleware = require('./middleware/logger');
 const app = express();
 const authRoutes = require('./routes/auth'); // Authentication
 const serviceRoutes = require('./routes/serviceRoutes');
+const stylistRoutes = require('./routes/stylistRoutes');
 
 // Middleware
 app.use(cors());
@@ -23,6 +24,7 @@ const salonRoutes = require('./routes/salonRoutes'); // Example route
 app.use('/api/salons', salonRoutes);
 app.use('/api/auth', authRoutes); // Authentication route
 app.use('/api/services', serviceRoutes);
+app.use('/api/stylists', stylistRoutes);
 
 const PORT = process.env.PORT || 5000;
 
