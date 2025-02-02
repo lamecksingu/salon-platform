@@ -20,6 +20,11 @@ const register = async (req, res) => {
 
 	    // If the role is stylist, add a record to the stylists table
         if (role === 'stylist') {
+		if (freelance === false && !salon_id) {
+			return res.status(400).json({
+				message: "Salon ID is required for non-freelance stylists",});
+		}
+
             await Stylist.create({
                 user_id: user.id, // Use the ID of the newly created user
                 name: name, // Default to the user's name
